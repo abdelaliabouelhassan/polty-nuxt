@@ -48,6 +48,7 @@
           <div class="step_number">1</div>
         </BaseRoundWrapper>
         <h2>Welche Produkte wollen sie digitalisieren?</h2>
+        <span style="color:red;" v-if="errorsProduct">Please Fill in all information the quantity can't be 0 or the name empty</span>
         <div style="width: 100%; padding-top: 88px">
           <ProductCard @deleteProduct="deleteProduct(index)" :_product="product" :_header="index == 0" style="margin-top: 10px"  v-for="(product,index,key) in products" :key="key"/>
          
@@ -87,6 +88,7 @@
           <div class="step_number">2</div>
         </BaseRoundWrapper>
         <h2>Wählen sie einen Polyte Subscription Plan</h2>
+         <span style="color:red;" v-if="errorsPlan">Please select your plan</span>
         <div class="subscription_plans">
           <SubscriptionPlan
             @click.native="SelectPlan('business')"
@@ -205,6 +207,8 @@ export default {
       openThankYouModal:false,
       selectedplan:'',
       products:[],
+      errorsProduct:false,
+      errorsPlan:false,
       plands:{
         business:{
           id:"business",
@@ -251,8 +255,43 @@ export default {
        total:0
      })
     },
+    validate(){
+      let valid = true
+      if(this.products.length == 0){
+       valid = false
+       this.AddProduct()
+      }
+
+      this.products.forEach((product,index) => {
+        if(product.name == '' || product.qty == 0){
+          valid = false;
+        }
+      })
+
+      if(!valid){
+        this.errorsProduct = true
+        window.scrollTo({
+          top: document.getElementById('product_section').offsetTop,
+          behavior: 'smooth'
+        });
+      }else {
+        this.errorsPlan = true
+        if(this.selectedplan == ''){
+          window.scrollTo({
+            top: document.getElementById('subscription_section').offsetTop,
+            behavior: 'smooth'
+          });
+          valid = false;
+        }
+      }
+      return valid
+    },
     openModal(){
-      this.openUserInfoModal = true
+      this.errorsPlan = false
+      this.errorsProduct = false
+      if(this.validate()){
+        this.openUserInfoModal = true
+      }
     },
     closeModal(){
      this.openUserInfoModal = false
