@@ -27,14 +27,13 @@
   </BaseButton>
 </template>
 
-
 <script>
-import BaseButton from '../global_components/BaseButton.vue'
+import BaseButton from "../global_components/BaseButton.vue";
 export default {
   components: {
-    BaseButton
-  }
-}
+    BaseButton,
+  },
+};
 </script>
 <style scoped>
 .send_btn {

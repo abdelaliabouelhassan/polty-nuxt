@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="subscription_plan"
-  >
+  <div class="subscription_plan">
     <BaseCard
       _width="20rem"
       outline
@@ -14,7 +12,8 @@
           <div class="sub_card_head">
             <div class="sub_card_head_logo">
               <PlanLogo
-                width="40" height="40"
+                width="40"
+                height="40"
                 :business="business"
                 :business_pro="business_pro"
                 :custom="custom"
@@ -79,7 +78,7 @@
 import RightFloatedContent from "@/components/global_components/RightFloatedContent.vue";
 import BaseCard from "@/components/global_components/BaseCard.vue";
 import BaseButton from "@/components/global_components/BaseButton.vue";
-import PlanLogo from "./PlanLogo.vue"
+import PlanLogo from "./PlanLogo.vue";
 export default {
   props: {
     outline_c: String,
@@ -90,12 +89,12 @@ export default {
     custom: Boolean,
     highlight: Boolean,
   },
- 
+
   components: {
     RightFloatedContent,
     BaseCard,
     BaseButton,
-    PlanLogo
+    PlanLogo,
   },
 };
 </script>
@@ -103,7 +102,7 @@ export default {
 <style scoped>
 .subscription_plan {
   width: fit-content;
-   cursor: pointer;
+  cursor: pointer;
 }
 
 .sub_card_body {
@@ -122,7 +121,7 @@ export default {
   text-align: start;
 }
 .sub_card_head_subtitle {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 .sub_card_head_title {
   font-size: 1.2rem;

@@ -18,21 +18,21 @@
     >
       <defs>
         <linearGradient
-          :id="'linear-gradient-'+ index"
+          :id="'linear-gradient-' + index"
           x1="1.007"
           y1="-0.048"
           x2="-0.012"
           y2="1.028"
           gradientUnits="objectBoundingBox"
         >
-            <stop v-if="business" offset="0" stop-color="#D900B8" />
-            <stop  v-if="business"  offset="1" stop-color="#950084" />
+          <stop v-if="business" offset="0" stop-color="#D900B8" />
+          <stop v-if="business" offset="1" stop-color="#950084" />
 
-            <stop  v-if="business_pro"  offset="0" stop-color="#00d8ff"/>
-            <stop   v-if="business_pro" offset="1" stop-color="#005c8d"/>
+          <stop v-if="business_pro" offset="0" stop-color="#00d8ff" />
+          <stop v-if="business_pro" offset="1" stop-color="#005c8d" />
 
-            <stop   v-if="custom" offset="0" stop-color="#155188"/>
-            <stop  v-if="custom"  offset="1" stop-color="#001324"/>
+          <stop v-if="custom" offset="0" stop-color="#155188" />
+          <stop v-if="custom" offset="1" stop-color="#001324" />
         </linearGradient>
       </defs>
       <path
@@ -43,9 +43,6 @@
         :fill="`url(#linear-gradient-${index})`"
       />
     </svg>
-
-    
-
   </div>
 </template>
 <script>
@@ -58,10 +55,10 @@ export default {
     width: String,
     height: String,
   },
-  data(){
+  data() {
     return {
-        index:0,
-    }
+      index: 0,
+    };
   },
   computed: {
     backgroundColor() {
@@ -87,9 +84,10 @@ export default {
       }
     },
   },
-  created(){
-    this.index = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000);
-  }
+  created() {
+    this.index =
+      Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000);
+  },
 };
 </script>
 <style scoped>

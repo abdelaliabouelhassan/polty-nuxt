@@ -174,24 +174,22 @@ export default {
       deep: true,
     },
   },
-  computed:{
-    BrandColor(){
-        if(this._product.difficulty == "easy"){
-          return "background: #5394FC;"
-        }
-        else if(this._product.difficulty == "medium"){
-          return "background: #3645F0;"
-        }
-        else if(this._product.difficulty == "hard"){
-          return "background: #1A0DB9;"
-        } 
-    }
+  computed: {
+    BrandColor() {
+      if (this._product.difficulty == "easy") {
+        return "background: #5394FC;";
+      } else if (this._product.difficulty == "medium") {
+        return "background: #3645F0;";
+      } else if (this._product.difficulty == "hard") {
+        return "background: #1A0DB9;";
+      }
+    },
   },
-  methods:{
-    DeleteProduct(){
-        this.$emit("deleteProduct")
-    }
-  }
+  methods: {
+    DeleteProduct() {
+      this.$emit("deleteProduct");
+    },
+  },
 };
 </script>
 <style scoped>

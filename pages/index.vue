@@ -48,10 +48,19 @@
           <div class="step_number">1</div>
         </BaseRoundWrapper>
         <h2>Welche Produkte wollen sie digitalisieren?</h2>
-        <span style="color:red;" v-if="errorsProduct">Please Fill in all information the quantity can't be 0 or the name empty</span>
+        <span style="color: red" v-if="errorsProduct"
+          >Please Fill in all information the quantity can't be 0 or the name
+          empty</span
+        >
         <div style="width: 100%; padding-top: 88px">
-          <ProductCard @deleteProduct="deleteProduct(index)" :_product="product" :_header="index == 0" style="margin-top: 10px"  v-for="(product,index,key) in products" :key="key"/>
-         
+          <ProductCard
+            @deleteProduct="deleteProduct(index)"
+            :_product="product"
+            :_header="index == 0"
+            style="margin-top: 10px"
+            v-for="(product, index, key) in products"
+            :key="key"
+          />
         </div>
         <BaseRoundWrapper
           style="
@@ -61,20 +70,20 @@
             padding: 20px 0;
             color: var(--primary-color);
             margin-top: 10px;
-            cursor:pointer;
+            cursor: pointer;
           "
           @click.native="AddProduct"
           rounded="8px"
           back_c="var(--secondary-lite-color)"
           border_c="var(--secondary-color)"
         >
-          <div style="font-weight: 500; margin: auto;">
+          <div style="font-weight: 500; margin: auto">
             <span style="font-weight: bold; font-size: 1.4rem">+</span> Neue
             Zeile hinzufügen
           </div>
         </BaseRoundWrapper>
         <RightFloatedContent class="section_footer">
-          Content Service: <span>{{totalProductPrice}}€</span>
+          Content Service: <span>{{ totalProductPrice }}€</span>
         </RightFloatedContent>
       </div>
     </section>
@@ -88,7 +97,9 @@
           <div class="step_number">2</div>
         </BaseRoundWrapper>
         <h2>Wählen sie einen Polyte Subscription Plan</h2>
-         <span style="color:red;" v-if="errorsPlan">Please select your plan</span>
+        <span style="color: red" v-if="errorsPlan"
+          >Please select your plan</span
+        >
         <div class="subscription_plans">
           <SubscriptionPlan
             @click.native="SelectPlan('business')"
@@ -103,8 +114,12 @@
             <template #impressions>20.000 / Monat</template>
             <template #could_storage>80 GB</template>
             <template #support_level>E-MAIL</template>
-            <template #monthly_price>{{plands.business.monthly}}€ / Month</template>
-            <template #annual_price>{{plands.business.yearly}}€ billed annually</template>
+            <template #monthly_price
+              >{{ plands.business.monthly }}€ / Month</template
+            >
+            <template #annual_price
+              >{{ plands.business.yearly }}€ billed annually</template
+            >
           </SubscriptionPlan>
 
           <SubscriptionPlan
@@ -120,11 +135,15 @@
             <template #impressions>40.000 / Monat</template>
             <template #could_storage>1,5 TB</template>
             <template #support_level>Account Manager</template>
-            <template #monthly_price>{{plands.business_pro.monthly}}€ / Month</template>
-            <template #annual_price>{{plands.business_pro.monthly}}€ billed annually</template>
+            <template #monthly_price
+              >{{ plands.business_pro.monthly }}€ / Month</template
+            >
+            <template #annual_price
+              >{{ plands.business_pro.monthly }}€ billed annually</template
+            >
           </SubscriptionPlan>
           <SubscriptionPlan
-           custom
+            custom
             outline_c="transparent"
             highlighted_c="var(--purple-color)"
             @click.native="SelectPlan('custom')"
@@ -145,7 +164,11 @@
         </div>
 
         <RightFloatedContent class="section_footer">
-          Subscription Plan: <span>{{selectedplan ? plands[selectedplan].monthly :  0}} € / Jahr</span>
+          Subscription Plan:
+          <span
+            >{{ selectedplan ? plands[selectedplan].monthly : 0 }} € /
+            Jahr</span
+          >
         </RightFloatedContent>
       </div>
     </section>
@@ -159,14 +182,22 @@
           <div class="step_number">3</div>
         </BaseRoundWrapper>
         <h2>Unverbindlich Anfragen</h2>
-        <BillCard style="margin-top: 50px" :products="products" :selected_plan="selectedplan ? plands[selectedplan] :  {}" />
+        <BillCard
+          style="margin-top: 50px"
+          :products="products"
+          :selected_plan="selectedplan ? plands[selectedplan] : {}"
+        />
         <div @click="openModal">
-          <SendButton style="margin-top: 50px"  />
+          <SendButton style="margin-top: 50px" />
         </div>
       </div>
     </section>
 
-    <UserInfoModal v-if="openUserInfoModal" />
+    <UserInfoModal
+      v-if="openUserInfoModal"
+      :selected_plan="selectedplan ? plands[selectedplan] : {}"
+      :products="products"
+    />
     <ThankYouModal v-if="openThankYouModal" />
   </div>
 </template>
@@ -199,132 +230,135 @@ export default {
     SubscriptionPlan,
     SendButton,
     UserInfoModal,
-    ThankYouModal
+    ThankYouModal,
   },
-  data(){
+  data() {
     return {
-      openUserInfoModal:false,
-      openThankYouModal:false,
-      selectedplan:'',
-      products:[],
-      errorsProduct:false,
-      errorsPlan:false,
-      plands:{
-        business:{
-          id:"business",
-          name:"Polyte Business",
-          monthly:'459',
-          yearly:'5.508',
+      openUserInfoModal: false,
+      openThankYouModal: false,
+      selectedplan: "",
+      products: [],
+      errorsProduct: false,
+      errorsPlan: false,
+      plands: {
+        business: {
+          id: "business",
+          name: "Polyte Business",
+          monthly: "459",
+          yearly: "5.508",
         },
-        business_pro:{
-          id:"business_pro",
-          name:"Polyte Business Pro",
-          monthly:'539',
-          yearly:'6.468',
+        business_pro: {
+          id: "business_pro",
+          name: "Polyte Business Pro",
+          monthly: "539",
+          yearly: "6.468",
         },
-        custom:{
-          id:"custom",
-          name:"Polyte Custom",
-          monthly:'0',
-          yearly:'0',
-        }
+        custom: {
+          id: "custom",
+          name: "Polyte Custom",
+          monthly: "0",
+          yearly: "0",
+        },
       },
-    }
+    };
   },
-  computed:{
-    totalProductPrice(){
-      return this.products.reduce((acc,product) => {
-        return acc + product.total
-      },0)
-    }
+  computed: {
+    totalProductPrice() {
+      return this.products.reduce((acc, product) => {
+        return acc + product.total;
+      }, 0);
+    },
   },
-  methods:{
-    SelectPlan(type){
-      this.selectedplan = type
-      localStorage.setItem('selectedplan',JSON.stringify(this.plands[type]))
-
+  methods: {
+    SelectPlan(type) {
+      this.selectedplan = type;
+      localStorage.setItem("selectedplan", JSON.stringify(this.plands[type]));
     },
-    deleteProduct(index){
-      this.products.splice(index,1)
+    deleteProduct(index) {
+      this.products.splice(index, 1);
     },
-    AddProduct(){
-     this.products.push({
-       name:'',
-       difficulty:'easy',
-       qty:0,
-       total:0
-     })
+    AddProduct() {
+      this.products.push({
+        name: "",
+        difficulty: "easy",
+        qty: 0,
+        total: 0,
+      });
     },
-    validate(){
-      let valid = true
-      if(this.products.length == 0){
-       valid = false
-       this.AddProduct()
+    validate() {
+      let valid = true;
+      if (this.products.length == 0) {
+        valid = false;
+        this.AddProduct();
       }
 
-      this.products.forEach((product,index) => {
-        if(product.name == '' || product.qty == 0){
+      this.products.forEach((product, index) => {
+        if (product.name == "" || product.qty == 0) {
           valid = false;
         }
-      })
+      });
 
-      if(!valid){
-        this.errorsProduct = true
+      if (!valid) {
+        this.errorsProduct = true;
         window.scrollTo({
-          top: document.getElementById('product_section').offsetTop,
-          behavior: 'smooth'
+          top: document.getElementById("product_section").offsetTop,
+          behavior: "smooth",
         });
-      }else {
-        this.errorsPlan = true
-        if(this.selectedplan == ''){
+      } else {
+        if (this.selectedplan == "") {
           window.scrollTo({
-            top: document.getElementById('subscription_section').offsetTop,
-            behavior: 'smooth'
+            top: document.getElementById("subscription_section").offsetTop,
+            behavior: "smooth",
           });
+          this.errorsPlan = true;
           valid = false;
         }
       }
-      return valid
+      return valid;
     },
-    openModal(){
-      this.errorsPlan = false
-      this.errorsProduct = false
-      if(this.validate()){
-        this.openUserInfoModal = true
+    openModal() {
+      this.errorsPlan = false;
+      this.errorsProduct = false;
+      if (this.validate()) {
+        this.openUserInfoModal = true;
       }
     },
-    closeModal(){
-     this.openUserInfoModal = false
-     this.openThankYouModal = false
-    }
+    closeModal() {
+      this.openUserInfoModal = false;
+      this.openThankYouModal = false;
+    },
   },
-  watch:{
-    products:{
-      handler(){
-        if(this.products.length > 0){
-          localStorage.setItem('products',JSON.stringify(this.products))
-        }else{
-          localStorage.removeItem('products')
+  watch: {
+    products: {
+      handler() {
+        if (this.products.length > 0) {
+          localStorage.setItem("products", JSON.stringify(this.products));
+        } else {
+          localStorage.removeItem("products");
         }
       },
-      deep:true
-    }
+      deep: true,
+    },
   },
-  mounted(){
-    this.$root.$on('closeModal',() =>{
+  mounted() {
+    this.$root.$on("closeModal", () => {
       this.closeModal();
-    })
-    if(localStorage.getItem('products')){
-      this.products = JSON.parse(localStorage.getItem('products'))
-      console.log(this.products)
-    }else{
+    });
+    this.$root.$on("emailSent", () => {
+      this.closeModal();
+      this.openThankYouModal = true;
+    });
+    if (localStorage.getItem("products")) {
+      this.products = JSON.parse(localStorage.getItem("products"));
+      console.log(this.products);
+    } else {
       this.AddProduct();
     }
 
-    if(localStorage.getItem('selectedplan')){
-      this.selectedplan = JSON.parse(localStorage.getItem('selectedplan')).id
+    if (localStorage.getItem("selectedplan")) {
+      this.selectedplan = JSON.parse(localStorage.getItem("selectedplan")).id;
     }
-  }
+  },
 };
 </script>
 

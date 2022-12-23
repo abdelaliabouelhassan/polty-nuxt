@@ -5,7 +5,7 @@
       <div class="modal-container">
         <div class="thank_you_card">
           <BaseCard
-          style="margin:auto;"
+            style="margin: auto"
             max_width="35rem"
             outline
             outline_c="var(--primary-lite-color)"
@@ -39,11 +39,11 @@ export default {
   components: {
     BaseCard,
   },
-    methods:{
-        CloseModal(){
-            this.$root.$emit('closeModal')
-        }
-    }
+  methods: {
+    CloseModal() {
+      this.$root.$emit("closeModal");
+    },
+  },
 };
 </script>
 
@@ -80,40 +80,36 @@ export default {
   opacity: 0.6;
 }
 
-
-
 .modal {
-    position: fixed;
-     top: 0px;
-     right: 0px;
-     bottom: 0px;
-     left: 0px;
-     z-index: 10;
-     
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 10;
 }
 
 .modal-bg {
- position: fixed;
+  position: fixed;
   top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-     background: rgba(126, 123, 123, 0.463);
-      transition-property: opacity;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background: rgba(126, 123, 123, 0.463);
+  transition-property: opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
 .modal-container {
-   min-height: 100%;
-   height: 100%;
-   width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding-top: 2rem;
-     text-align: center;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+  text-align: center;
 }
-
 
 @media (min-width: 29rem) {
   /*sm*/
