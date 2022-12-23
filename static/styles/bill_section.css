@@ -1,0 +1,65 @@
+
+#bill_section{
+
+}
+#bill_section>.container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+}
+.step_number{
+    font-size:2rem;
+    color:var(--secondary-color);
+    font-weight:bold;
+    display:inline-block;
+    margin :0;
+    width:2.5rem;
+    height:2.5rem;
+}
+
+#bill_section>.container> h2{
+    font-size:1.2rem;
+    margin:1rem 0;
+}
+
+#bill_section .send_btn{
+    padding: 10px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+    font-size:0.85rem;
+    
+
+
+}
+#bill_section .send_btn_logo{
+    margin-right:10px;
+}
+
+@media (min-width: 29rem) {/*sm*/ 
+    #bill_section>.container > h2{
+        font-size:2rem;  
+        font-weight: 700;
+        font-family: Inter;
+        color: #02303B;
+    }
+}
+
+
+@media (min-width: 36rem) {/*sm*/ 
+    
+}
+@media (min-width: 48rem) {/*md*/
+   
+}
+@media (min-width: 62rem) {/*lg*/
+   
+}
+@media (min-width: 75rem) {/*xl*/
+    
+}
+@media (min-width: 87.5rem) {/*xxl*/
+  
+}

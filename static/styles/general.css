@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+:root {
+    --main-background-color: #F6F7F9;
+    --primary-color:#022B3B;
+    --primary-lite-color:#02303B16;
+    --primary-gradient: linear-gradient(to right top, #022B3B, #005C8D 70%);
+    --secondary-color:#02303B48;
+    --secondary-lite-color:#FAFAFA;  
+
+    --pink-color:#D900B8;
+    --pink-lite-color:#D900B833;
+    --pink-gradient: linear-gradient(to right top, #981186, #CB19AC 40%);
+    
+    --skyBlue-color: #00D8FF;
+    --skyBlue-lite-color: #00D8FF45;
+    --skyBlue-gradient: linear-gradient(to right top, #005C8D, #00D8FF 90% );
+
+    --purpleBlue-gradient: linear-gradient(to right, #5361FC, #7EC2FC 95% );
+
+    --purple-color:#5361FC;
+    
+    --lite-font-color:#02303B80;
+    
+  
+    --main-font: 'Inter' , serif;
+  
+    --xs: 475px;
+    --sm: 36rem;
+    --md: 48rem;
+    --lg: 62rem;
+    --xl: 75rem;
+    --xxl: 87.5rem;
+}
+
+#checkout_page section{
+    padding: 2rem 0;
+}
