@@ -49,8 +49,8 @@
         </BaseRoundWrapper>
         <h2>Welche Produkte wollen sie digitalisieren?</h2>
         <div style="width: 100%; padding-top: 88px">
-          <ProductCard _header />
-          <ProductCard style="margin-top: 10px" />
+          <ProductCard @deleteProduct="deleteProduct(index)" :_product="product" :_header="index == 0" style="margin-top: 10px"  v-for="(product,index,key) in products" :key="key"/>
+         
         </div>
         <BaseRoundWrapper
           style="
@@ -60,18 +60,20 @@
             padding: 20px 0;
             color: var(--primary-color);
             margin-top: 10px;
+            cursor:pointer;
           "
+          @click.native="AddProduct"
           rounded="8px"
           back_c="var(--secondary-lite-color)"
           border_c="var(--secondary-color)"
         >
-          <div style="font-weight: 500; margin: auto">
+          <div style="font-weight: 500; margin: auto;">
             <span style="font-weight: bold; font-size: 1.4rem">+</span> Neue
             Zeile hinzufügen
           </div>
         </BaseRoundWrapper>
         <RightFloatedContent class="section_footer">
-          Content Service: <span>10.846,00 €</span>
+          Content Service: <span>{{totalProductPrice}}€</span>
         </RightFloatedContent>
       </div>
     </section>
@@ -85,44 +87,46 @@
           <div class="step_number">2</div>
         </BaseRoundWrapper>
         <h2>Wählen sie einen Polyte Subscription Plan</h2>
-        <div class="subscription_plans"  @click="SelectPlan('business')">
+        <div class="subscription_plans">
           <SubscriptionPlan
-           
+            @click.native="SelectPlan('business')"
             business
             outline_c="transparent"
             highlighted_c="var(--purple-color)"
             color="transparent linear-gradient(253deg, #CB19AC 0%, #981186 100%)"
-            :highlight="!test"
+            :highlight="selectedplan == 'business'"
           >
             <template #title>Polyte Business</template>
             <template #sub_title>Ideal for small business</template>
             <template #impressions>20.000 / Monat</template>
             <template #could_storage>80 GB</template>
             <template #support_level>E-MAIL</template>
-            <template #monthly_price>459€ / Month</template>
-            <template #annual_price>5.508€ billed annually</template>
+            <template #monthly_price>{{plands.business.monthly}}€ / Month</template>
+            <template #annual_price>{{plands.business.yearly}}€ billed annually</template>
           </SubscriptionPlan>
 
           <SubscriptionPlan
-            @click="SelectPlan('business')"
+            @click.native="SelectPlan('business_pro')"
             business_pro
             outline_c="transparent"
             highlighted_c="var(--purple-color)"
             color="transparent linear-gradient(253deg, #00B3D3 0%, #005C8D 100%)"
-             :highlight="test"
+            :highlight="selectedplan == 'business_pro'"
           >
             <template #title>Polyte Business Pro</template>
             <template #sub_title>Ideal for large business</template>
             <template #impressions>40.000 / Monat</template>
             <template #could_storage>1,5 TB</template>
             <template #support_level>Account Manager</template>
-            <template #monthly_price>539€ / Month</template>
-            <template #annual_price>5.508€ billed annually</template>
+            <template #monthly_price>{{plands.business_pro.monthly}}€ / Month</template>
+            <template #annual_price>{{plands.business_pro.monthly}}€ billed annually</template>
           </SubscriptionPlan>
           <SubscriptionPlan
            custom
             outline_c="transparent"
             highlighted_c="var(--purple-color)"
+            @click.native="SelectPlan('custom')"
+            :highlight="selectedplan == 'custom'"
           >
             <template #title>Polyte Custom</template>
             <template #sub_title>Need to scale with Polyte?</template>
@@ -139,21 +143,21 @@
         </div>
 
         <RightFloatedContent class="section_footer">
-          Subscription Plan: <span>5.508,00 € / Jahr</span>
+          Subscription Plan: <span>{{selectedplan ? plands[selectedplan].monthly :  0}} € / Jahr</span>
         </RightFloatedContent>
       </div>
     </section>
 
     <section id="bill_section">
       <div class="container">
-        <base-round-wrapper
+        <BaseRoundWrapper
           back_c="var(--secondary-lite-color)"
           border_c="var(--secondary-color)"
         >
           <div class="step_number">3</div>
-        </base-round-wrapper>
+        </BaseRoundWrapper>
         <h2>Unverbindlich Anfragen</h2>
-        <BillCard style="margin-top: 50px" />
+        <BillCard style="margin-top: 50px" :products="products" :selected_plan="selectedplan ? plands[selectedplan] :  {}" />
         <div @click="openModal">
           <SendButton style="margin-top: 50px"  />
         </div>
@@ -199,12 +203,53 @@ export default {
     return {
       openUserInfoModal:false,
       openThankYouModal:false,
-      test:false
+      selectedplan:'',
+      products:[],
+      plands:{
+        business:{
+          id:"business",
+          name:"Polyte Business",
+          monthly:'459',
+          yearly:'5.508',
+        },
+        business_pro:{
+          id:"business_pro",
+          name:"Polyte Business Pro",
+          monthly:'539',
+          yearly:'6.468',
+        },
+        custom:{
+          id:"custom",
+          name:"Polyte Custom",
+          monthly:'0',
+          yearly:'0',
+        }
+      },
+    }
+  },
+  computed:{
+    totalProductPrice(){
+      return this.products.reduce((acc,product) => {
+        return acc + product.total
+      },0)
     }
   },
   methods:{
-    SelectPlan(){
-      this.test = !this.test
+    SelectPlan(type){
+      this.selectedplan = type
+      localStorage.setItem('selectedplan',JSON.stringify(this.plands[type]))
+
+    },
+    deleteProduct(index){
+      this.products.splice(index,1)
+    },
+    AddProduct(){
+     this.products.push({
+       name:'',
+       difficulty:'easy',
+       qty:0,
+       total:0
+     })
     },
     openModal(){
       this.openUserInfoModal = true
@@ -214,10 +259,32 @@ export default {
      this.openThankYouModal = false
     }
   },
+  watch:{
+    products:{
+      handler(){
+        if(this.products.length > 0){
+          localStorage.setItem('products',JSON.stringify(this.products))
+        }else{
+          localStorage.removeItem('products')
+        }
+      },
+      deep:true
+    }
+  },
   mounted(){
     this.$root.$on('closeModal',() =>{
       this.closeModal();
     })
+    if(localStorage.getItem('products')){
+      this.products = JSON.parse(localStorage.getItem('products'))
+      console.log(this.products)
+    }else{
+      this.AddProduct();
+    }
+
+    if(localStorage.getItem('selectedplan')){
+      this.selectedplan = JSON.parse(localStorage.getItem('selectedplan')).id
+    }
   }
 };
 </script>

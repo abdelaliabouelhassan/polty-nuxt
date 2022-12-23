@@ -49,13 +49,20 @@
 
 
 @media (min-width: 36rem) {/*sm*/ 
+    .bill_content_w{
+        width: auto;
+    }
     
 }
 @media (min-width: 48rem) {/*md*/
-   
+    .bill_content_w{
+        width: 35rem;
+    }
+    
 }
 @media (min-width: 62rem) {/*lg*/
-   
+  
+  
 }
 @media (min-width: 75rem) {/*xl*/
     

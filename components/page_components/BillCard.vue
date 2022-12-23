@@ -2,33 +2,25 @@
     <div class="bill_card">
         <BaseCard min_width="20rem" max_width="40rem">
             <template #content>
-                <div class="bill_content">
+                <div class="bill_content bill_content_w">
                     <div class="content_service">
                         <div>Content Service</div>
-                        <div>10.846,00 €</div>
+                        <div>{{total}} €</div>
                     </div>
-                    <div class="products">
-                        <div class="product">
-                            <div class="product_name">1. product name</div>
-                            <div>- Easy </div>
-                            <div>- 6 Varianten</div>
+                    <div class="products" v-for="(product,index,key) in products" :key="key">
+                        <div class="product" >
+                            <div class="product_name">{{index + 1}}. {{product.name}}</div>
+                            <div>- {{product.difficulty}} </div>
+                            <div>- {{product.qty}} Varianten</div>
                         </div>
-                        <div class="">545,00 €</div>
+                        <div class="">{{product.total}} €</div>
                     </div>
-                    <div class="products">
-                        <div class="product">
-                            <div class="product_name">1. product name</div>
-                            <div>- Easy </div>
-                            <div>- 6 Varianten</div>
-                        </div>
-                        <div class="">545,00 €</div>
-                    </div>
-                    <div class="bill_plan">
+                    <div class="bill_plan" v-if="selected_plan.id">
                         <div class="plan_title">
-                            <PlanLogo business_pro width="25" height="25"/>
-                            <span>Polyte Business Subscription</span>
+                            <PlanLogo business_pro width="25" height="25" :business="selected_plan.id == 'business'" :business_pro="selected_plan.id == 'business_pro'" :custom="selected_plan.id == 'custom'"/>
+                            <span>{{selected_plan.name}}</span>
                         </div>
-                        <div class="">5.508,00 € / Jahr</div>
+                        <div class="">{{selected_plan.yearly}} € / Jahr</div>
                     </div>
                 </div>
 
@@ -38,7 +30,7 @@
         <template #footer>
             <div class="bill_footer">
                 <div>Total</div>
-                <div>545,00 €</div>
+                <div>{{FinalPrice}} €</div>
             </div>
         </template>
 
@@ -52,16 +44,33 @@ import BaseCard from "@/components/global_components/BaseCard.vue";
 import PlanLogo from "./PlanLogo.vue"
 
 export default {
+    props:{
+        products:{
+            type: Array,
+            default: () => []
+        },
+        selected_plan:{
+            type: Object,
+            default: () => {}
+        },
+    },
     components: {
         BaseCard,
         PlanLogo
     },
+    computed: {
+        total(){
+            return this.products.reduce((acc,product) => acc + product.total,0)
+        },
+        FinalPrice(){
+            return Number(this.total) + Number(this.selected_plan.yearly)
+        }
+    }
     
 }
 </script>
 
 <style scoped>
-
 .sub_card_head_logo{
     width: 20px;
     height: 20px;
@@ -118,7 +127,6 @@ export default {
 .bill_plan{
     border-top: 3px solid var(--primary-lite-color);
     padding-top: 20px;
-
 }
 .plan_title{
     display: flex;

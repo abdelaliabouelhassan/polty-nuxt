@@ -9,10 +9,10 @@
 </template>
 <script>
 export default {
-    props:['_difficulty'],
+    props:['value'],
     data() {
         return {
-            difficulty:'easy',
+            difficulty:this.value,
             allowDividerOne:false,
             dividerOne:false,
             allowDividerTwo:true,
@@ -56,14 +56,6 @@ export default {
                 this.dividerTwo = !this.dividerTwo
             }    
         },
-    },
-    watch:{
-        _difficulty(newValue){
-            this.difficulty = newValue
-        }
-    },
-    mounted() {
-        this.$emit('input', this.difficulty)    
     },
 }
 </script>

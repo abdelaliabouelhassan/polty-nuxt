@@ -88,7 +88,7 @@ export default {
     },
   },
   created(){
-    this.index = Math.floor(Math.random() * 1000);
+    this.index = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000);
   }
 };
 </script>

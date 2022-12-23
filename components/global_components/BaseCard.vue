@@ -23,7 +23,6 @@
         </div>
         <div class="base_card_footer">
           <slot name="footer"></slot>
-          {{ highlight }}
         </div>
       </div>
     </BaseRoundWrapper>

@@ -8,31 +8,24 @@
 </template>
 <script>
 export default {
-    props:['_productCount'],
+    props:['value'],
     data() {
         return {
-            count:0
+            count: this.value
         }
     },
-    watch:{
-        _productCount(newValue){
-            this.count = newValue
-        }
-    },
+  
     methods:{
         increase(){
             this.count++
             this.$emit('input',this.count)
         },
         decrease(){
+            if(this.count<=0) return
             this.count--
             this.$emit('input',this.count)
         }
-    },
-    mounted() {
-        this.$emit('input',this.count)
-    },
-    
+    },    
 }
 </script>
 
