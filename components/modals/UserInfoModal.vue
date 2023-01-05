@@ -66,7 +66,7 @@
 <script>
 import SendButton from "../page_components/SendButton.vue";
 import BaseCard from "../global_components/BaseCard2.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   components: {

@@ -34,6 +34,19 @@
           </g>
         </svg>
         <span style="padding-left: 10px">Oberflächenkomplexität</span>
+        <div style="padding-left:10px; padding-top:5px;">
+          <div style="cursor:pointer;">
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 38 38">
+              <g id="Group_2822" data-name="Group 2822" transform="translate(-1408 -2520)" opacity="0.496">
+                <path id="Path_4880" data-name="Path 4880" d="M8803.627,699.219v9.966a2.2,2.2,0,0,0,4.4,0v-9.966a2.2,2.2,0,0,0-4.4,0Zm2.2-4.189a2.141,2.141,0,1,1,2.141-2.141A2.141,2.141,0,0,1,8805.829,695.031Z" transform="translate(-7378.627 1838.251)" fill="#02303b"/>
+                <g id="Ellipse_305" data-name="Ellipse 305" transform="translate(1408 2520)" fill="none" stroke="#02303b" stroke-width="3">
+                  <circle cx="19" cy="19" r="19" stroke="none"/>
+                  <circle cx="19" cy="19" r="17.5" fill="none"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
       <div class="title-header">
         <svg
@@ -52,6 +65,19 @@
           />
         </svg>
         <span style="padding-left: 10px">Produktvariationen</span>
+         <div style="padding-left:10px; padding-top:5px;">
+          <div  style="cursor:pointer;">
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 38 38">
+              <g id="Group_2822" data-name="Group 2822" transform="translate(-1408 -2520)" opacity="0.496">
+                <path id="Path_4880" data-name="Path 4880" d="M8803.627,699.219v9.966a2.2,2.2,0,0,0,4.4,0v-9.966a2.2,2.2,0,0,0-4.4,0Zm2.2-4.189a2.141,2.141,0,1,1,2.141-2.141A2.141,2.141,0,0,1,8805.829,695.031Z" transform="translate(-7378.627 1838.251)" fill="#02303b"/>
+                <g id="Ellipse_305" data-name="Ellipse 305" transform="translate(1408 2520)" fill="none" stroke="#02303b" stroke-width="3">
+                  <circle cx="19" cy="19" r="19" stroke="none"/>
+                  <circle cx="19" cy="19" r="17.5" fill="none"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
     <div class="product_card">
@@ -60,9 +86,13 @@
         <div class="content">
           <div class="content_division">
             <input type="text" class="product_name" v-model="_product.name" />
-            <div>
+            <div v-if="!_product.showDescription" @click="AddDescription" style="cursor:pointer;padding-bottom:10px;">
               <span>Add description</span>
             </div>
+             <div v-else @click="AddDescription" style="cursor:pointer;padding-bottom:10px;">
+              <span style="color:red;">remove description</span>
+            </div>
+            <textarea v-model="_product.description" v-if="_product.showDescription" name="" id="" cols="30" rows="5" placeholder="Add description" style="padding:15px;height:auto;" class="product_name"></textarea>
           </div>
           <div class="content_division complexity">
             <div>
@@ -153,9 +183,9 @@ export default {
   data() {
     return {
       prices: {
-        easy: 10,
-        medium: 20,
-        hard: 30,
+        easy: 100,
+        medium: 200,
+        hard: 300,
       },
       difficultyTexts: {
         easy: " Ihr Produkt ist in seine hat eine geringe Komplexität. z.B. Vase, Tasse,",
@@ -163,13 +193,18 @@ export default {
           " Ihr Produkt ist in seine hat eine mittlere Komplexität wie z.B. Fahrrad oder Schuh.",
         hard: " /* to be provided */",
       },
+      Produktvariationen:{
+        easy:12,
+        medium:13,
+        hard:14,
+      }
     };
   },
   watch: {
     _product: {
       handler: function () {
-        this._product.total =
-          this._product.qty * this.prices[this._product.difficulty];
+        let Produktvariationen = this._product.qty * this.Produktvariationen[this._product.difficulty]
+        this._product.total = this.prices[this._product.difficulty] + Produktvariationen;
       },
       deep: true,
     },
@@ -189,6 +224,9 @@ export default {
     DeleteProduct() {
       this.$emit("deleteProduct");
     },
+    AddDescription(){
+      this._product.showDescription = !this._product.showDescription
+    }
   },
 };
 </script>

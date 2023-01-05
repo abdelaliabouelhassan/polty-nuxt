@@ -279,11 +279,24 @@ export default {
     },
     AddProduct() {
       this.products.push({
-        name: "",
+        name: this.addProductName(),
         difficulty: "easy",
-        qty: 0,
-        total: 0,
+        qty: 1,
+        total:  112,
+        description: "",
+        showDescription:false,
       });
+    },
+    addProductName(){
+      let name = "Product " + (this.products.length + 1);
+      //check if name already exists
+      let exists = this.products.find((product) => {
+        return product.name == name;
+      });
+      if (exists) {
+        name = name + "-" + Math.floor(Math.random() * 100);
+      }
+      return name;
     },
     validate() {
       let valid = true;
@@ -357,6 +370,8 @@ export default {
 
     if (localStorage.getItem("selectedplan")) {
       this.selectedplan = JSON.parse(localStorage.getItem("selectedplan")).id;
+    }else{
+      this.SelectPlan("business");
     }
   },
 };

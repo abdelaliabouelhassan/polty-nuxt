@@ -20,7 +20,7 @@ export default {
       this.$emit("input", this.count);
     },
     decrease() {
-      if (this.count <= 0) return;
+      if (this.count <= 1) return;
       this.count--;
       this.$emit("input", this.count);
     },
