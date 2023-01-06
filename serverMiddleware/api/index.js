@@ -28,6 +28,12 @@ async function sendToCustomerEmail(req, res) {
     <h1>Your Plan Request</h1>
     </br>
     <h3>Selected Plan</h3>
+    <ul>
+        <li>Plan: ${selected_plan.name}</li>
+        <li>Monthly: Price: ${selected_plan.monthly}</li>
+        <li>Yearly: Price: ${selected_plan.yearly}</li>
+    </ul>
+    <h3>Selected Products</h3>
     `;
 
   products.forEach((product) => {
@@ -37,6 +43,7 @@ async function sendToCustomerEmail(req, res) {
             <li>Difficulty: ${product.difficulty}</li>
             <li>Qty: ${product.qty}</li>
             <li>Price: ${product.price}</li>
+            <li>Description: ${product.description}</li>
         </ul>
         `;
   });
@@ -105,6 +112,7 @@ async function sendToSalesTeam(req, res) {
             <li>Difficulty: ${product.difficulty}</li>
             <li>Qty: ${product.qty}</li>
             <li>Price: ${product.price}</li>
+            <li>Description: ${product.description}</li>
         </ul>
         `;
   });
