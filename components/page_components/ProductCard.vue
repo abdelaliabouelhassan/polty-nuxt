@@ -4,7 +4,7 @@
       <div class="title-header">
         <span>Name</span>
       </div>
-      <div class="title-header">
+      <div class="title-header" @mouseover="showSurface = true" @mouseleave="showSurface = false">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -35,7 +35,7 @@
         </svg>
         <span style="padding-left: 10px">Oberflächenkomplexität</span>
         <div style="padding-left:10px; padding-top:5px;">
-          <div style="cursor:pointer;">
+          <div style="cursor:pointer;position: relative;">
            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 38 38">
               <g id="Group_2822" data-name="Group 2822" transform="translate(-1408 -2520)" opacity="0.496">
                 <path id="Path_4880" data-name="Path 4880" d="M8803.627,699.219v9.966a2.2,2.2,0,0,0,4.4,0v-9.966a2.2,2.2,0,0,0-4.4,0Zm2.2-4.189a2.141,2.141,0,1,1,2.141-2.141A2.141,2.141,0,0,1,8805.829,695.031Z" transform="translate(-7378.627 1838.251)" fill="#02303b"/>
@@ -45,10 +45,14 @@
                 </g>
               </g>
             </svg>
+             <div v-if="showSurface" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);position: absolute; height: 0.5rem; width: 0.75rem;background-color:#e3d8d8;left:2px;top:14px;"></div>
           </div>
         </div>
+        <div style="position: absolute;z-index:5;width:100%; height:100%;left: 0px;top: 38px;" v-if="showSurface">
+            <Tooltips title="Surface Complexity examples" />
+        </div>
       </div>
-      <div class="title-header">
+      <div class="title-header" @mouseover="showProduct = true" @mouseleave="showProduct = false">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -66,7 +70,7 @@
         </svg>
         <span style="padding-left: 10px">Produktvariationen</span>
          <div style="padding-left:10px; padding-top:5px;">
-          <div  style="cursor:pointer;">
+          <div  style="cursor:pointer;position: relative;">
            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 38 38">
               <g id="Group_2822" data-name="Group 2822" transform="translate(-1408 -2520)" opacity="0.496">
                 <path id="Path_4880" data-name="Path 4880" d="M8803.627,699.219v9.966a2.2,2.2,0,0,0,4.4,0v-9.966a2.2,2.2,0,0,0-4.4,0Zm2.2-4.189a2.141,2.141,0,1,1,2.141-2.141A2.141,2.141,0,0,1,8805.829,695.031Z" transform="translate(-7378.627 1838.251)" fill="#02303b"/>
@@ -76,7 +80,12 @@
                 </g>
               </g>
             </svg>
+            <div v-if="showProduct" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);position: absolute; height: 0.5rem; width: 0.75rem;background-color:#e3d8d8;left:2px;top:14px;"></div>
           </div>
+          <div style="position: absolute;z-index:5;width:100%; height:100%;left: 0px;top: 38px;"  v-if="showProduct">
+            <Tooltips title="Product variations" />
+          </div>
+         
         </div>
       </div>
     </div>
@@ -92,7 +101,7 @@
              <div v-else @click="AddDescription" style="cursor:pointer;padding-bottom:10px;">
               <span style="color:red;">remove description</span>
             </div>
-            <textarea v-model="_product.description" v-if="_product.showDescription" name="" id="" cols="30" rows="5" placeholder="Add description" style="padding:15px;height:auto;" class="product_name"></textarea>
+            <textarea v-model="_product.description" v-if="_product.showDescription" name="" id="" cols="30" rows="5" placeholder="Add description" style="padding:15px;height:auto;font-size:16px;" class="product_name"></textarea>
           </div>
           <div class="content_division complexity">
             <div>
@@ -166,12 +175,14 @@
 <script>
 import DifficultySelector from "./DifficultySelector.vue";
 import BaseRoundWrapper from "@/components/global_components/BaseRoundWrapper.vue";
+import Tooltips from "@/components/global_components/Tooltips.vue";
 import Counter from "./Counter.vue";
 export default {
   components: {
     DifficultySelector,
     Counter,
     BaseRoundWrapper,
+    Tooltips,
   },
   props: {
     _header: Boolean,
@@ -197,7 +208,9 @@ export default {
         easy:12,
         medium:13,
         hard:14,
-      }
+      },
+      showSurface:false,
+      showProduct:false,
     };
   },
   watch: {
@@ -226,7 +239,10 @@ export default {
     },
     AddDescription(){
       this._product.showDescription = !this._product.showDescription
+      if(this._product.showDescription){
+        this._product.description = ''
     }
+    },
   },
 };
 </script>
@@ -242,6 +258,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .title-header > span {
@@ -354,7 +371,6 @@ export default {
 
   .product_card_header {
     width: 100%;
-    overflow: hidden;
     display: flex;
     padding: 0 20px 0 30px;
     box-sizing: border-box;
